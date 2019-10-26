@@ -1,5 +1,7 @@
 <template>
-  <div id="app">nihaoa</div>
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 
 <script>
