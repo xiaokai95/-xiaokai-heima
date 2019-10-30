@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import local from '@/utils/local'
 export default {
   data () {
     const validatorName = (rule, value, callback) => {
@@ -36,8 +37,8 @@ export default {
     }
     return {
       loginForm: {
-        mobile: '',
-        code: ''
+        mobile: '13911111111',
+        code: '246810'
       },
       rules: {
         mobile: [
@@ -61,6 +62,7 @@ export default {
           this.$http
             .post('authorizations', this.loginForm)
             .then(res => {
+              local.setUser(res.data.data)
               this.$router.push('/')
             })
             .catch(() => {
