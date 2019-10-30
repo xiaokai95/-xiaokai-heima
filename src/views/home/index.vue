@@ -46,15 +46,15 @@
       <el-header>
         <i class="el-icon-s-fold icon" @click="toggleMenu"></i>
         <span class="text">江苏传智播客教育科技股份有限公司</span>
-        <el-dropdown trigger="click" style="float: right">
+        <el-dropdown trigger="click" style="float: right" @command="handleCommand">
           <span class="el-dropdown-link">
-            <img src="../../assets/avatar.jpg" alt />
-            <b style="margin-left:10px">用户名</b>
+            <img :src="photo" alt />
+            <b style="margin-left:10px">{{ name }}</b>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-setting">个人设置</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-unlock">退出登录</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-setting" command="setting">个人设置</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-unlock" command="logOut">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -66,15 +66,33 @@
 </template>
 
 <script>
+import local from '@/utils/local'
 export default {
   data () {
     return {
-      isOpen: true
+      isOpen: true,
+      name: '',
+      photo: ''
     }
+  },
+  created () {
+    const user = local.getUser()
+    this.name = user.name
+    this.photo = user.photo
   },
   methods: {
     toggleMenu () {
       this.isOpen = !this.isOpen
+    },
+    setting () {
+      this.$router.push('/setting')
+    },
+    logOut () {
+      local.delUser()
+      this.$router.push('/login')
+    },
+    handleCommand (command) {
+      this[command]()
     }
   }
 }
@@ -112,6 +130,8 @@ export default {
     }
   }
   img {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     vertical-align: middle;
   }
