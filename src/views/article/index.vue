@@ -70,9 +70,21 @@ import { async } from 'q';
         </el-table-column>
         <el-table-column prop="pubdate" label="发布时间"></el-table-column>
         <el-table-column prop="address" label="操作">
-          <template>
-            <el-button type="primary" icon="el-icon-edit" circle plain></el-button>
-            <el-button type="danger" icon="el-icon-delete" circle plain></el-button>
+          <template slot-scope="scope">
+            <el-button
+              type="primary"
+              icon="el-icon-edit"
+              circle
+              plain
+              @click="toEdit(scope.row.id)"
+            ></el-button>
+            <el-button
+              type="danger"
+              icon="el-icon-delete"
+              circle
+              plain
+              @click="delArticle(scope.row.id)"
+            ></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -149,6 +161,20 @@ export default {
         this.begin_pubdate = null
         this.end_pubdate = null
       }
+    },
+    toEdit (id) {
+      this.$router.push({
+        path: '/publish',
+        query: { id }
+      })
+    },
+    async delArticle (id) {
+      // 发请求  restfull 接口规则（get post put patch delete）
+      await this.$http.delete(`articles/${id}`)
+      // 提示
+      this.$message.success('删除成功')
+      // 更新列表
+      this.getArticles()
     }
 
   }
