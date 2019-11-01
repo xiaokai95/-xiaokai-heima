@@ -3,7 +3,7 @@
     <el-aside :width="isOpen?'200px':'64px'">
       <div class="logo" :class="{'sm_logo':!isOpen}"></div>
       <el-menu
-        default-active="/"
+        :default-active="$route.path"
         background-color="#002033"
         text-color="#fff"
         active-text-color="#ffd04b"
@@ -48,7 +48,7 @@
         <span class="text">江苏传智播客教育科技股份有限公司</span>
         <el-dropdown trigger="click" style="float: right" @command="handleCommand">
           <span class="el-dropdown-link">
-            <img :src="photo" alt />
+            <img :src="photo" alt class="userImg" />
             <b style="margin-left:10px">{{ name }}</b>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
@@ -98,7 +98,7 @@ export default {
 }
 </script>
 
-<style lang='less'>
+<style scoped lang='less'>
 .home-container {
   width: 100%;
   height: 100%;
@@ -129,7 +129,7 @@ export default {
       vertical-align: middle;
     }
   }
-  img {
+  .userImg {
     width: 40px;
     height: 40px;
     border-radius: 50%;
