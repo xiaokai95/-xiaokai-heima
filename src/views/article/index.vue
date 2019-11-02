@@ -3,10 +3,7 @@ import { async } from 'q';
   <div class="content-article">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>内容管理</el-breadcrumb-item>
-        </el-breadcrumb>
+        <my-bread>内容管理</my-bread>
       </div>
       <el-form label-width="80px" size="small">
         <el-form-item label="状态:">
@@ -20,9 +17,7 @@ import { async } from 'q';
           </el-radio-group>
         </el-form-item>
         <el-form-item label="频道:">
-          <el-select v-model="options.channel_id" placeholder="请选择" clearable>
-            <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
+          <my-channel v-model="reqParams.channel_id"></my-channel>
         </el-form-item>
         <el-form-item label="日期:">
           <el-date-picker
@@ -129,14 +124,14 @@ export default {
     }
   },
   created () {
-    this.getchannels()
+    // this.getchannels()
     this.getArticles()
   },
   methods: {
-    async getchannels () {
-      const { data: { data } } = await this.$http.get('channels')
-      this.options = data.channels
-    },
+    // async getchannels () {
+    //   const { data: { data } } = await this.$http.get('channels')
+    //   this.options = data.channels
+    // },
     async getArticles () {
       const { data: { data } } = await this.$http.get('articles', { params: this.reqParams })
       // debugger
@@ -148,8 +143,8 @@ export default {
       this.getArticles()
     },
     filters () {
-      this.reqParams.channel_id = this.options.channel_id
-      if (this.reqParams.channel_id === '') this.reqParams.channel_id = null
+      // this.reqParams.channel_id = this.options.channel_id
+      // if (this.reqParams.channel_id === '') this.reqParams.channel_id = null
       this.reqParams.page = 1
       this.getArticles()
     },
