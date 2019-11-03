@@ -7,6 +7,10 @@ import Error404 from '@/views/404'
 import local from '@/utils/local'
 import article from '@/views/article'
 import Image from '@/views/image'
+import Publish from '@/views/publish'
+import comment from '@/views/comment'
+import Fans from '@/views/fans'
+import Setting from '@/views/setting'
 
 Vue.use(VueRouter)
 const routerPush = VueRouter.prototype.push
@@ -33,6 +37,22 @@ const router = new VueRouter({
     {
       path: '/image',
       component: Image
+    },
+    {
+      path: '/publish',
+      component: Publish
+    },
+    {
+      path: '/comment',
+      component: comment
+    },
+    {
+      path: '/fans',
+      component: Fans
+    },
+    {
+      path: '/setting',
+      component: Setting
     },
     {
       path: '*',
