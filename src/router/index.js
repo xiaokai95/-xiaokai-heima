@@ -6,6 +6,7 @@ import Welcome from '@/views/welcome'
 import Error404 from '@/views/404'
 import local from '@/utils/local'
 import article from '@/views/article'
+import Image from '@/views/image'
 
 Vue.use(VueRouter)
 const routerPush = VueRouter.prototype.push
@@ -28,6 +29,10 @@ const router = new VueRouter({
     {
       path: '/article',
       component: article
+    },
+    {
+      path: '/image',
+      component: Image
     },
     {
       path: '*',
