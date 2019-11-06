@@ -2,7 +2,7 @@
   <div class="publish">
     <el-card>
       <div slot="header">
-        <my-bread>发布文章</my-bread>
+        <my-bread>{{ $route.query.id?'修改文章':'发布文章' }}</my-bread>
       </div>
       <el-form label-width="120px">
         <el-form-item label="标题:">
@@ -34,8 +34,12 @@
         <el-form-item label="频道:">
           <my-channel v-model="articleForm.channel_id"></my-channel>
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="create(false)">发布</el-button>
+        <el-form-item v-if="$route.query.id">
+          <el-button type="success" @click="update(false)">修改</el-button>
+          <el-button @click="update(true)">存入草稿</el-button>
+        </el-form-item>
+        <el-form-item v-else>
+          <el-button type="primary" @click="create(false)">发表</el-button>
           <el-button @click="create(true)">存入草稿</el-button>
         </el-form-item>
       </el-form>
@@ -79,13 +83,53 @@ export default {
       }
     }
   },
+  created () {
+    const arctileId = this.$route.query.id
+    if (arctileId) {
+      // 修改逻辑
+      // 填充表单内容
+      this.getarticleStatus(arctileId)
+    }
+  },
   methods: {
+    // 修改
+    async update (draft) {
+      await this.$http.put(`articles/${this.articleForm.id}?draft=${draft}`, this.articleForm)
+      // 成功
+      this.$message.success(draft ? '存入草稿成功' : '修改成功')
+      this.$router.push('/article')
+    },
     async create (draft) {
       await this.$http.post(`/articles?draft=${draft}`, this.articleForm)
       this.$message.success(draft ? '存入草稿成功' : '发表成功')
       this.$router.push('/article')
+    },
+    async getarticleStatus (id) {
+      const { data: { data } } = await this.$http.get(`articles/${id}`)
+      this.articleForm = data
+    }
+  },
+  watch: {
+    // key===>被监听的(this下的)数据的字段的名字
+    // value ===> 值改变后触发的函数 (newVal,oldVal) 新值  旧值
+    '$route.query.id': function (newVal, oldVal) {
+      if (newVal) {
+        // 修改 填充表单
+        this.getarticleStatus(newVal)
+      } else {
+        // 新建 重置表单
+        this.articleForm = {
+          title: null,
+          content: null,
+          cover: {
+            type: 1,
+            images: []
+          }
+        }
+      }
     }
   }
+
 }
 </script>
 
