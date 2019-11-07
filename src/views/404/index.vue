@@ -13,6 +13,6 @@ export default {}
   position: absolute;
   left: 0;
   top: 0;
-  background: url("../../assets/404.png") no-repeat center / cover;
+  background: url("../../assets/404.jpg") no-repeat center / cover;
 }
 </style>

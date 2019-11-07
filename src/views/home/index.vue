@@ -45,7 +45,7 @@
     <el-container>
       <el-header>
         <i class="el-icon-s-fold icon" @click="toggleMenu"></i>
-        <span class="text">江苏传智播客教育科技股份有限公司</span>
+        <span class="text">欢迎来到后台管理系统</span>
         <el-dropdown trigger="click" style="float: right" @command="handleCommand">
           <span class="el-dropdown-link">
             <img :src="photo" alt class="userImg" />
@@ -67,6 +67,8 @@
 
 <script>
 import local from '@/utils/local'
+import eventBus from '@/eventBus'
+
 export default {
   data () {
     return {
@@ -79,6 +81,12 @@ export default {
     const user = local.getUser()
     this.name = user.name
     this.photo = user.photo
+    eventBus.$on('userName', name => {
+      this.name = name
+    })
+    eventBus.$on('updatePhoto', photo => {
+      this.photo = photo
+    })
   },
   methods: {
     toggleMenu () {
@@ -110,10 +118,12 @@ export default {
     .logo {
       width: 100%;
       height: 60px;
-      background: #002244 url("../../assets/logo_admin.png") no-repeat center;
+      background: #002244 url("../../assets/logo_admin.png") no-repeat center /
+        200px 60px;
     }
     .sm_logo {
-      background: #002244 url("../../assets/logo_admin_01.png") no-repeat center;
+      background: #002244 url("../../assets/logo_admin_01.png") no-repeat
+        center/60px 60px;
     }
   }
   .el-header {

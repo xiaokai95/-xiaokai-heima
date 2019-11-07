@@ -1,7 +1,8 @@
 <template>
   <div class="cantainer">
     <el-card>
-      <img src="../../assets/logo_index.png" alt />
+      <!-- <img src="../../assets/logo_index.png" alt /> -->
+      <h1 style="text-align:center;color:#409EFF">后台管理系统</h1>
       <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm">
         <el-form-item prop="mobile">
           <el-input v-model="loginForm.mobile" placeholder="请输入手机号" maxlength="11"></el-input>
