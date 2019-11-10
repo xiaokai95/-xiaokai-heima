@@ -14,6 +14,7 @@ export default {
       options: []
     }
   },
+  
   created () {
     this.getchannels()
   },
